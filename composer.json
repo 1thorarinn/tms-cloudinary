@@ -1,0 +1,15 @@
+{
+    "name": "thorarinnt/tms-cloudinary",
+    "authors": [
+        {
+            "name": "thorarinnt",
+            "email": "thorarinnt@tmsoftware.is"
+        }
+    ],
+    "require": {
+        "cloudinary/cloudinary_php": "dev-master"
+      },
+      "autoload": {
+          "psr-4": {"TMS\\": "src/"}
+      }
+}
