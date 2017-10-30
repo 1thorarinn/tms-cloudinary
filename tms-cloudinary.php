@@ -282,3 +282,48 @@ function adjust_image_sizes_attr( $sizes, $size ) {
 }
 add_filter( 'wp_calculate_image_sizes', 'adjust_image_sizes_attr', 10 , 2 );
 */
+
+
+require __DIR__ . '/src/tms-images-list-table.php';
+
+
+function my_add_menu_items(){
+    add_menu_page('WP List Table Ajax', 'WP List Table Ajax Sample', 'activate_plugins', 'wp_ajax_list_test', 'wp_list_page');
+}
+
+add_action('admin_menu', 'my_add_menu_items');
+
+function wp_list_page() {
+
+    ?>
+
+    <div class="wrap">
+
+        <h2>WP List Table Ajax Sample</h2>
+
+        <form id="email-sent-list" method="get">
+
+            <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
+            <input type="hidden" name="order" value="<?php echo $_REQUEST['order']; ?>" />
+            <input type="hidden" name="orderby" value="<?php echo $_REQUEST['orderby']; ?>" />
+
+            <div id="ts-history-table" style="">
+                <?php
+
+                wp_nonce_field( 'ajax-custom-list-nonce', '_ajax_custom_list_nonce' );
+                ?>
+            </div>
+            <?php
+            $wp_list_table = new Tms_Product_List_Table();
+            //$wp_list_table->ajax_response();
+            $wp_list_table->prepare_items();
+            $wp_list_table->display();
+            var_dump($wp_list_table->items);
+            ?>
+        </form>
+
+    </div>
+
+    <?php
+
+}
